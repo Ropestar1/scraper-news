@@ -1,0 +1,27 @@
+{
+  "name": "scraper-news",
+  "version": "1.0.0",
+  "description": "App that scrapes the news and allows users to leave notes on articles they choose.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ropestar1/scraper-news.git"
+  },
+  "author": "Roper Macaraeg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ropestar1/scraper-news/issues"
+  },
+  "homepage": "https://github.com/Ropestar1/scraper-news#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.15.4",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.11.6",
+    "request": "^2.81.0"
+  }
+}
