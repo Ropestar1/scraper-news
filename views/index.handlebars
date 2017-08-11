@@ -1,6 +1,47 @@
-<div id="wrapper">
-  <h1>Note Scraper</h1>
-  <h2><i>If you can do this...the homework should be no problem.</i></h2>
-  <div id="articles"></div>
-  <div id="notes"></div>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+  	<div class="row">
+  		<div class="col-md-2">
+  			<p>Scraper News - BBC</p>
+  		</div>
+  		<div class="col-md-1">
+  			<a href="./"><p>Home</p></a>
+  		</div>
+  		<div class="col-md-2">
+  			<a href="./saved">Saved Articles</a>
+  		</div>
+  		<div class="col-md-6">
+  			<a href="./scrape"><button class="btn btn-default" type="submit" id="btn-scrape">Scrape Articles</button></a>
+  		</div>
+  	</div>    
+  </div>
+</nav>
+
+<header class="jumbotron">
+  <h1 class="text-center">Scraper News</h1>
+  <p class="text-center">BBC Edition</p>
+</header>
+
+<div class="container">
+	<div class="row">
+	  <div class="col-md-12">
+	  	<div class="panel panel-default">
+        {{#each articles}}
+			  <div class="panel-heading">
+			    <h3 class="panel-title">{{title}}</h3>
+			  </div>
+			  <div class="panel-body">
+			    <p><a href="{{link}}">{{link}}</a></p>
+          <button class="btn btn-default btn-save" type="submit" data-id="{{_id}}">Save Article</button>
+			  </div>
+        {{/each}}
+			</div>
+	  </div>
+	</div>
 </div>
+
+
+
+{{!--   <div id="notes">
+  	
+  </div> --}}
