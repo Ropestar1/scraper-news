@@ -4,11 +4,16 @@ var Schema = mongoose.Schema;
 var ArticleSchema = new Schema({
   title: {
     type: String,
+    unique: true,
     required: true
   },
   link: {
     type: String,
     required: true
+  },
+  saved: {
+    type: Boolean,
+    default: false,
   },
   // This only saves one note's ObjectId, ref refers to the Note model
   note: {
