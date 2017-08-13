@@ -5,14 +5,11 @@
   			<p>Scraper News - BBC</p>
   		</div>
   		<div class="col-md-1">
-  			<a href="./"><p>Home</p></a>
+  			<a href="/"><p>Home</p></a>
   		</div>
   		<div class="col-md-2">
   			<a href="./saved"><p>Saved Articles</p></a>
   		</div>
-{{!--   		<div class="col-md-6">
-  			<button class="btn btn-default" type="submit">Scrape Articles</button>
-  		</div> --}}
   	</div>    
   </div>
 </nav>
@@ -27,14 +24,34 @@
 	<div class="row">
 	  <div class="col-md-12">
       <div class="panel panel-default">
-        {{#each articles}}
+        {{#each savedArticles}}
         <div class="panel-heading">
           <h3 class="panel-title">{{title}}</h3>
         </div>
         <div class="panel-body">
           <p><a href="{{link}}">{{link}}</a></p>
-          <button class="btn btn-default btn-unsave" type="submit" data-id="{{_id}}">Remove from Save</button>
-          <button class="btn btn-default btn-unsave" type="submit" data-id="{{_id}}">Remove from Save</button>
+          <button class="btn btn-default" type="submit" id="btn-unsave" data-id="{{_id}}" data-toggle="modal" data-target="#unsaveModal">Remove from Save</button>
+          <button class="btn btn-default" type="submit" id="btn-view-note" data-id="{{_id}}">Add Note</button>
+
+            <!-- MODAL: UNSAVED START -->
+            <div class="modal fade" id="unsaveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Article Name</h4>
+                  </div>
+                  <div class="modal-body">
+                    Removed from saved articles.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- MODAL: UNSAVED END -->
+                
         </div>
         {{/each}}
       </div>

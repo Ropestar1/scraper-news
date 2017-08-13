@@ -11,7 +11,7 @@
   			<a href="./saved">Saved Articles</a>
   		</div>
   		<div class="col-md-6">
-  			<a href="./scrape"><button class="btn btn-default" type="submit" id="btn-scrape">Scrape Articles</button></a>
+  			<button class="btn btn-default" type="submit" id="btn-scrape">Scrape Articles</button>
   		</div>
   	</div>    
   </div>
@@ -32,7 +32,27 @@
 			  </div>
 			  <div class="panel-body">
 			    <p><a href="{{link}}">{{link}}</a></p>
-          <button class="btn btn-default btn-save" type="submit" data-id="{{_id}}">Save Article</button>
+          <button class="btn btn-default" type="submit" id="btn-save" data-id="{{_id}}" data-toggle="modal" data-target="#saveModal">Save Article</button>
+
+            {{!-- MODAL: SAVED ARTICLE START--}}
+            <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Saved</h4>
+                  </div>
+                  <div class="modal-body">
+                    Article -------- saved.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{!-- MODAL: SAVED ARTICLE END --}}
+            
 			  </div>
         {{/each}}
 			</div>
