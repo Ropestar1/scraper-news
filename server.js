@@ -126,23 +126,39 @@ app.post("/unsave/:id", function(req, res) {
   });
 });
 
-app.get("/saved/note/:id", function(req, res) {
-  var savedNotesArray = {
-    savedNotes: [],
-  };
+app.post("/article/notes/:id", function(req, res) {
+  var newNote = new Note(req.body);
 
-  Article.find({'_id': req.params.id}, function(error, doc) {
-    if (error) console.log(error);
-
+  // console.log('req.body', req.body);
+  Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes": newNote }})
+  .exec(function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
     else {
-      for (var i =0; i < doc.notes.length; i++) {
-        savedNotesArray.savedNotes.push(doc[i]);
-      };
-      //FIX BELOW TO SEND BACK THE NOTES FOR THE SPECIFIC ARTICLE
-      res.render('saved', savedArticleArray);
+      res.send('note added');
     }
   });
+
+  // newNote.save(function(error, doc) {
+  //   if (error) res.send(error);
+  //   else {
+  //     // Find our user and push the new note id into the User's notes array
+  //     User.findOneAndUpdate({"_id": req.params.id}, { $push: { "notes": doc._id } }, { new: true }, function(err, newdoc) {
+  //       // Send any errors to the browser
+  //       if (err) {
+  //         res.send(err);
+  //       }
+  //       // Or send the newdoc to the browser
+  //       else {
+  //         res.send(newdoc);
+  //       }
+  //     });
+  //   }
+  // });
 });
+
+
 
 // // Create a new note or replace an existing note
 // app.post("/articles/:id", function(req, res) {

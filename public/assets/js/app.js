@@ -41,20 +41,42 @@ $(document).on("click", "#btn-unsave", function(event) {
   })
 });
 
-$(document).on("click", "#btn-view-note", function(event) {
+$(document).on("click", "#btn-add-note", function(event) {
   event.preventDefault();
 
   var thisId = $(this).attr("data-id");
+  // console.log('thisId Value', thisId);
+  // console.log('textarea#' + thisId + 'note-input');
+  var noteBody = $('textarea#' + thisId + 'note-input').val().trim();
+  console.log('noteBody value', noteBody);
 
-  console.log('unsaved clicked');
+  console.log('add note clicked');
   $.ajax({
     method: "POST",
-    url: "/saved/note/" + thisId
+    url: "/article/notes/" + thisId,
+    data: {body: noteBody} //does this line work right????
   })
-  .done(function(data) {
-    console.log(data);
+  .done(function(dataFromServer) {
+    console.log(dataFromServer);
   })
 });
+
+// $(document).on("click", "#btn-delete-note", function(event) {
+//   event.preventDefault();
+
+//   var thisId = $(this).attr("data-id");
+
+//   console.log('unsaved clicked');
+//   $.ajax({
+//     method: "DELETE",
+//     url: "/article/notes/" + thisId
+//   })
+//   .done(function(data) {
+//     console.log(data);
+//   })
+// });
+
+
 
 
 
