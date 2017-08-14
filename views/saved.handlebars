@@ -69,8 +69,8 @@
                     {{!-- DOES THIS WORK? --}}
                     {{#each notes}}
                       <div>
-                        <p>{{body}}</p>
-                        {{!-- CHANGE BUTTON BELOW TO REMOVE NOTE --}}
+                        {{!-- something about the below handlebar isn't displaying body...could be database issue too --}}
+                        <p>{{notes.body}}</p>
                         <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn-delete-note">Delete Note</button>
                       </div>
                     {{/each}}

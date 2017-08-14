@@ -54,27 +54,27 @@ $(document).on("click", "#btn-add-note", function(event) {
   $.ajax({
     method: "POST",
     url: "/article/notes/" + thisId,
-    data: {body: noteBody} //does this line work right????
+    data: {body: noteBody}
   })
   .done(function(dataFromServer) {
     console.log(dataFromServer);
   })
 });
 
-// $(document).on("click", "#btn-delete-note", function(event) {
-//   event.preventDefault();
+$(document).on("click", "#btn-delete-note", function(event) {
+  event.preventDefault();
 
-//   var thisId = $(this).attr("data-id");
+  var thisId = $(this).attr("data-id");
 
-//   console.log('unsaved clicked');
-//   $.ajax({
-//     method: "DELETE",
-//     url: "/article/notes/" + thisId
-//   })
-//   .done(function(data) {
-//     console.log(data);
-//   })
-// });
+  console.log('unsaved clicked');
+  $.ajax({
+    method: "DELETE",
+    url: "/article/notes/" + thisId
+  })
+  .done(function(data) {
+    console.log(data);
+  })
+});
 
 
 
