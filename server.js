@@ -22,8 +22,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static("public"));
 
-// CHANGE BELOW CODE WHEN DEPLOYING TO HEROKU??????
+
 mongoose.connect("mongodb://localhost/scraping-mongoose");
+// mongoose.connect("mongodb://heroku_n9jhvtvp:2ljmj0t4f8kvq1h8uvfli79tnc@ds151431.mlab.com:51431/heroku_n9jhvtvp");
 var db = mongoose.connection;
 
 db.on("error", function(error) {
@@ -70,35 +71,29 @@ app.get("/saved", function(req, res) {
 });
 
 app.get("/scrape", function(req, res) {
-  request("http://www.echojs.com/", function(error, response, html) {
+  request("http://www.bbc.com/news", function(error, response, html) {
 
     var $ = cheerio.load(html);
 
-    $("article h2").each(function(i, element) {
-
+    $("a.gs-c-promo-heading").each(function(i, element) {
+      console.log(element);
       var result = {};
-      
-      result.title = $(this).children("a").text();
-      result.link = $(this).children("a").attr("href");
+
+      result.title = $(element).children().text();
+      result.link = $(element).attr("href");
 
       var entry = new Article(result);
 
-      // Now, save that entry to the db
       entry.save(function(err, doc) {
-        if (err) {
-          console.log(err);
-        }
-        // Or log the doc
-        else {
-          console.log(doc);
-        }
+        if (err) console.log(err);
+
+        else console.log(doc);
       });
-    });
+    });    
 
     // WHY DOESN'T THE REDIRECT WORK??????
     res.redirect('/');
     // ???????????
-    
   });
 });
 
@@ -129,7 +124,6 @@ app.post("/unsave/:id", function(req, res) {
 app.post("/article/notes/:id", function(req, res) {
   var newNote = new Note(req.body);
 
-  // console.log('req.body', req.body);
   Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes": newNote }})
   .exec(function(err, doc) {
     if (err) {
@@ -139,57 +133,21 @@ app.post("/article/notes/:id", function(req, res) {
       res.send('note added');
     }
   });
-
-  // newNote.save(function(error, doc) {
-  //   if (error) res.send(error);
-  //   else {
-  //     // Find our user and push the new note id into the User's notes array
-  //     User.findOneAndUpdate({"_id": req.params.id}, { $push: { "notes": doc._id } }, { new: true }, function(err, newdoc) {
-  //       // Send any errors to the browser
-  //       if (err) {
-  //         res.send(err);
-  //       }
-  //       // Or send the newdoc to the browser
-  //       else {
-  //         res.send(newdoc);
-  //       }
-  //     });
-  //   }
-  // });
 });
 
+app.delete("/article/notes/:id", function(req, res) {
 
-
-// // Create a new note or replace an existing note
-// app.post("/articles/:id", function(req, res) {
-//   // Create a new note and pass the req.body to the entry
-//   var newNote = new Note(req.body);
-
-//   // And save the new note the db
-//   newNote.save(function(error, doc) {
-//     // Log any errors
-//     if (error) {
-//       console.log(error);
-//     }
-//     // Otherwise
-//     else {
-//       // Use the article id to find and update it's note
-//       Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc._id })
-//       // Execute the above query
-//       .exec(function(err, doc) {
-//         // Log any errors
-//         if (err) {
-//           console.log(err);
-//         }
-//         else {
-//           // Or send the document to the browser
-//           res.send(doc);
-//         }
-//       });
-//     }
-//   });
-// });
-
+  // Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes": newNote }})
+  // .exec(function(err, doc) {
+  //   if (err) {
+  //     console.log(err);
+  //   }
+  //   else {
+  //     res.send('note added');
+  //   }
+  // });
+  
+});
 
 // Listen on port 3000
 app.listen(3000, function() {
