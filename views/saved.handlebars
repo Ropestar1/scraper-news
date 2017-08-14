@@ -23,26 +23,28 @@
 <div class="container">
 	<div class="row">
 	  <div class="col-md-12">
-      <div class="panel panel-default">
-        {{#each savedArticles}}
-        <div class="panel-heading">
-          <h3 class="panel-title">{{title}}</h3>
-        </div>
-        <div class="panel-body">
-          <p><a href="{{link}}">{{link}}</a></p>
-          <button class="btn btn-default" type="submit" id="btn-unsave" data-id="{{_id}}" data-toggle="modal" data-target="#unsaveModal">Remove from Save</button>
-          <button class="btn btn-default" type="submit" id="btn-view-note" data-id="{{_id}}">Add Note</button>
+
+      {{#each savedArticles}}
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{title}}</h3>
+          </div>
+          <div class="panel-body">
+            <p><a href="{{link}}">{{link}}</a></p>
 
             <!-- MODAL: UNSAVED START -->
-            <div class="modal fade" id="unsaveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <button class="btn btn-default" type="submit" id="btn-unsave" data-id="{{_id}}" data-toggle="modal" data-target="#{{_id}}unsaveModal">Remove from Save</button>
+              
+            <div class="modal fade" id="{{_id}}unsaveModal" tabindex="-1" role="dialog" aria-labelledby="modalArticleRemoved">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Article Name</h4>
+                    <h4 class="modal-title" id="modalArticleRemoved">Article Removed</h4>
                   </div>
                   <div class="modal-body">
-                    Removed from saved articles.
+                    Removed "{{title}}" from saved articles. Please reload page to see changes.
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -51,16 +53,48 @@
               </div>
             </div>
             <!-- MODAL: UNSAVED END -->
-                
+            
+            <!-- MODAL: NOTE START -->
+            <button class="btn btn-default" type="submit" id="btn-view-note" data-id="{{_id}}" data-toggle="modal" data-target="#{{_id}}noteModal">View Notes</button>
+              
+            <div class="modal fade" id="{{_id}}noteModal" tabindex="-1" role="dialog" aria-labelledby="modalArticleNotes">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalArticleNotes">Article "{{title}}" Notes</h4>
+                  </div>
+                  <div class="modal-body">
+
+                    {{!-- DOES THIS WORK? --}}
+                    {{#each notes}}
+                      <div>
+                        <p>{{body}}</p>
+                        {{!-- CHANGE BUTTON BELOW TO REMOVE NOTE --}}
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn-delete-note">Delete Note</button>
+                      </div>
+                    {{/each}}
+                    {{!-- DOES THIS WORK? --}}
+
+                    <div>
+                      <textarea class="form-control" id="{{_id}}note-input" rows="3"></textarea> 
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-id="{{_id}}" id="btn-add-note">Add Note</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- MODAL: NOTE END -->
+
+          </div>
         </div>
-        {{/each}}
-      </div>
+
+     {{/each}}
+
 	  </div>
 	</div>
 </div>
-
-
-
-{{!--   <div id="notes">
-  	
-  </div> --}}
