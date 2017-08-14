@@ -36,7 +36,7 @@ db.once("open", function() {
 });
 
 
-app.get("/", function(req, res) {
+app.get("./", function(req, res) {
   var articleArray = {
     articles: [],
   };
