@@ -23,8 +23,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static("public"));
 
 
-mongoose.connect("mongodb://localhost/scraping-mongoose");
-// mongoose.connect("mongodb://heroku_n9jhvtvp:2ljmj0t4f8kvq1h8uvfli79tnc@ds151431.mlab.com:51431/heroku_n9jhvtvp");
+// mongoose.connect("mongodb://localhost/scraping-mongoose");
+mongoose.connect("mongodb://heroku_n9jhvtvp:2ljmj0t4f8kvq1h8uvfli79tnc@ds151431.mlab.com:51431/heroku_n9jhvtvp");
 var db = mongoose.connection;
 
 db.on("error", function(error) {
@@ -72,15 +72,23 @@ app.get("/saved", function(req, res) {
 
 app.get("/scrape", function(req, res) {
   request("http://www.bbc.com/news", function(error, response, html) {
-
     var $ = cheerio.load(html);
 
     $("a.gs-c-promo-heading").each(function(i, element) {
       console.log(element);
+
       var result = {};
+      var link = $(element).attr("href");
+
+      var fixLink = function (){
+        if (link[0] === 'h' && link[1] === 't' && link[2] === 't' && link[3] === 'p') {
+          result.link = link
+        }
+        else result.link = 'http://www.bbc.com' + link;
+      };
 
       result.title = $(element).children().text();
-      result.link = $(element).attr("href");
+      fixLink();
 
       var entry = new Article(result);
 
