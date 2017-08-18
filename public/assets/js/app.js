@@ -3,11 +3,11 @@ $(document).on("click", "#btn-scrape", function(event) {
 
   console.log('scrape clicked');
   $.ajax({
-    method: "GET",
+    method: "POST",
     url: "/scrape"
   })
-  .done(function(data) {
-    console.log(data);
+  .done(function() {
+    location.reload();
   })
 });
 
@@ -69,7 +69,7 @@ $(document).on("click", "#btn-delete-note", function(event) {
   console.log('unsaved clicked');
   $.ajax({
     method: "DELETE",
-    url: "/article/notes/" + thisId
+    url: "/article/notes/delete/" + thisId
   })
   .done(function(data) {
     console.log(data);

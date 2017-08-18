@@ -23,8 +23,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static("public"));
 
 
-// mongoose.connect("mongodb://localhost/scraping-mongoose");
-mongoose.connect("mongodb://heroku_n9jhvtvp:2ljmj0t4f8kvq1h8uvfli79tnc@ds151431.mlab.com:51431/heroku_n9jhvtvp");
+mongoose.connect("mongodb://localhost/scraping-mongoose");
+// mongoose.connect("mongodb://heroku_n9jhvtvp:2ljmj0t4f8kvq1h8uvfli79tnc@ds151431.mlab.com:51431/heroku_n9jhvtvp");
 var db = mongoose.connection;
 
 db.on("error", function(error) {
@@ -70,7 +70,7 @@ app.get("/saved", function(req, res) {
   });
 });
 
-app.get("/scrape", function(req, res) {
+app.post("/scrape", function(req, res) {
   request("http://www.bbc.com/news", function(error, response, html) {
     var $ = cheerio.load(html);
 
@@ -95,13 +95,12 @@ app.get("/scrape", function(req, res) {
       entry.save(function(err, doc) {
         if (err) console.log(err);
 
-        else console.log(doc);
+        else console.log('FROM SCRAPE =====', doc);
       });
-    });    
+    });
 
-    // WHY DOESN'T THE REDIRECT WORK??????
     res.redirect('/');
-    // ???????????
+
   });
 });
 
@@ -143,17 +142,17 @@ app.post("/article/notes/:id", function(req, res) {
   });
 });
 
-app.delete("/article/notes/:id", function(req, res) {
-
-  // Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes": newNote }})
-  // .exec(function(err, doc) {
-  //   if (err) {
-  //     console.log(err);
-  //   }
-  //   else {
-  //     res.send('note added');
-  //   }
-  // });
+app.post("/article/notes/delete/:noteid/", function(req, res) {
+  //find a way to identify the articleid
+  Article.update({ "_id": req.params.id }, {$pull: {"notes": req.params.id }})
+  .exec(function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.send('note added');
+    }
+  });
   
 });
 
