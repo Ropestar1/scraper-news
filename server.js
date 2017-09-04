@@ -131,26 +131,41 @@ app.post("/unsave/:id", function(req, res) {
 app.post("/article/notes/:id", function(req, res) {
   var newNote = new Note(req.body);
 
-  Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes": newNote }})
-  .exec(function(err, doc) {
-    if (err) {
-      console.log(err);
-    }
+  newNote.save(function(error, doc) {
+    if (error) throw error;
+  
     else {
-      res.send('note added');
+      Article.findOneAndUpdate({ "_id": req.params.id }, { $push: {"notes": newNote._id }})
+      .exec(function(err, doc) {
+        if (error) throw error;
+
+        else {
+          res.send(doc);
+        }
+      });
     }
   });
+
+  // Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes": newNote }})
+  // .exec(function(err, doc) {
+  //   if (err) {
+  //     console.log(err);
+  //   }
+  //   else {
+  //     res.send(newNote);
+  //   }
+  // });
 });
 
-app.post("/article/notes/delete/:noteid/", function(req, res) {
+app.delete("/article/notes/delete/:noteid/", function(req, res) {
   //find a way to identify the articleid
-  Article.update({ "_id": req.params.id }, {$pull: {"notes": req.params.id }})
+  Article.update({ "_id": req.params.id }, {$pull: {"notes": req.params.noteid }})
   .exec(function(err, doc) {
     if (err) {
       console.log(err);
     }
     else {
-      res.send('note added');
+      res.send('note removed');
     }
   });
   
