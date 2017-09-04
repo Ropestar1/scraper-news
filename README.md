@@ -1,8 +1,8 @@
 # Scraper News - BBC Edition
 
-![Scraper News walkthrough](./readme-material/scraper-walkthrough.gif)
+<!-- ![Scraper News walkthrough](./readme-material/scraper-walkthrough.gif) -->
 
-Web application allowing a user to scrape the BBC website for top stories. User is able to save the article, unsave the article, and add notes/comments to the saved articles for viewing at a later time.
+Web application allowing a user to scrape the BBC website for top stories. User is able to save the article, unsave the article, and add notes/comments to the saved articles. Existing notes are shown only by their unique id numbers.
 
 ### Technologies Used:
 HTML5/CSS3, Bootstrap, Handlebars, JavaScript, Node.js, mongoDB, express, cheerio, mongoose,

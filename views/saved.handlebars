@@ -65,16 +65,14 @@
                     <h4 class="modal-title" id="modalArticleNotes">Article "{{title}}" Notes</h4>
                   </div>
                   <div class="modal-body">
-
-                    {{!-- DOES THIS WORK? --}}
-                    {{#each notes}}
-                      <div>
-                        {{!-- something about the below handlebar isn't displaying body...could be database issue too --}}
-                        <p>{{notes.body}}</p>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn-delete-note">Delete Note</button>
-                      </div>
-                    {{/each}}
-                    {{!-- DOES THIS WORK? --}}
+                    
+                    <div data-article-id={{_id}}>
+                      {{#each notes}}
+                        <p>{{this}}</p>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn-delete-note" data-note-id="{{this}}">Delete Note</button>
+                        {{!-- delete doesn't delete note --}}
+                      {{/each}}
+                    </div>
 
                     <div>
                       <textarea class="form-control" id="{{_id}}note-input" rows="3"></textarea> 
