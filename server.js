@@ -23,8 +23,20 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static("public"));
 
 
-mongoose.connect("mongodb://localhost/scraping-mongoose");
-// mongoose.connect("mongodb://heroku_n9jhvtvp:2ljmj0t4f8kvq1h8uvfli79tnc@ds151431.mlab.com:51431/heroku_n9jhvtvp");
+//database logic
+if (process.env.MONGODB_URI || process.env.NODE_ENV === 'production') {
+  const promise = mongoose.connect(process.env.MONGODB_URI, {
+    useMongoClient: true,
+    /* other options */
+  });
+}
+else {
+  const promise = mongoose.connect('mongodb://localhost/scraping-mongoose', {
+    useMongoClient: true,
+    /* other options */
+  });
+}
+
 var db = mongoose.connection;
 
 db.on("error", function(error) {
@@ -133,7 +145,7 @@ app.post("/article/notes/:id", function(req, res) {
 
   newNote.save(function(error, doc) {
     if (error) throw error;
-  
+
     else {
       Article.findOneAndUpdate({ "_id": req.params.id }, { $push: {"notes": newNote._id }})
       .exec(function(err, doc) {
@@ -168,7 +180,7 @@ app.delete("/article/notes/delete/:noteid/", function(req, res) {
       res.send('note removed');
     }
   });
-  
+
 });
 
 // Listen on port 3000
