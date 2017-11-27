@@ -25,18 +25,11 @@ app.use(express.static("public"));
 
 //database logic
 if (process.env.MONGODB_URI || process.env.NODE_ENV === 'production') {
-  const promise = mongoose.connect(process.env.MONGODB_URI, {
-    useMongoClient: true,
-    /* other options */
-  });
+  mongoose.connect(process.env.MONGODB_URI);
 }
 else {
-  const promise = mongoose.connect('mongodb://localhost/scraping-mongoose', {
-    useMongoClient: true,
-    /* other options */
-  });
+  mongoose.connect("mongodb://localhost/scraping-mongoose");
 }
-
 var db = mongoose.connection;
 
 db.on("error", function(error) {
@@ -157,6 +150,16 @@ app.post("/article/notes/:id", function(req, res) {
       });
     }
   });
+
+  // Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes": newNote }})
+  // .exec(function(err, doc) {
+  //   if (err) {
+  //     console.log(err);
+  //   }
+  //   else {
+  //     res.send(newNote);
+  //   }
+  // });
 });
 
 app.delete("/article/notes/delete/:noteid/", function(req, res) {
@@ -170,6 +173,7 @@ app.delete("/article/notes/delete/:noteid/", function(req, res) {
       res.send('note removed');
     }
   });
+
 });
 
 // Listen on port 3000
