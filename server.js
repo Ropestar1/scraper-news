@@ -145,11 +145,7 @@ app.post("/article/notes/:id", function(req, res) {
 
   newNote.save(function(error, doc) {
     if (error) throw error;
-<<<<<<< HEAD
 
-=======
-
->>>>>>> 6664ab5bd0a3cbe48c23737fd6402f328c3301c9
     else {
       Article.findOneAndUpdate({ "_id": req.params.id }, { $push: {"notes": newNote._id }})
       .exec(function(err, doc) {
@@ -161,16 +157,6 @@ app.post("/article/notes/:id", function(req, res) {
       });
     }
   });
-
-  // Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes": newNote }})
-  // .exec(function(err, doc) {
-  //   if (err) {
-  //     console.log(err);
-  //   }
-  //   else {
-  //     res.send(newNote);
-  //   }
-  // });
 });
 
 app.delete("/article/notes/delete/:noteid/", function(req, res) {
@@ -184,11 +170,6 @@ app.delete("/article/notes/delete/:noteid/", function(req, res) {
       res.send('note removed');
     }
   });
-<<<<<<< HEAD
-
-=======
-
->>>>>>> 6664ab5bd0a3cbe48c23737fd6402f328c3301c9
 });
 
 // Listen on port 3000
