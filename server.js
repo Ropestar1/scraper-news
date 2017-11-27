@@ -22,13 +22,18 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static("public"));
 
-
 //database logic
 if (process.env.MONGODB_URI || process.env.NODE_ENV === 'production') {
-  mongoose.connect(process.env.MONGODB_URI);
+  const promise = mongoose.connect(process.env.MONGODB_URI, {
+    useMongoClient: true,
+    /* other options */
+  });
 }
 else {
-  mongoose.connect("mongodb://localhost/scraping-mongoose");
+  const promise = mongoose.connect('mongodb://localhost/scraping-mongoose', {
+    useMongoClient: true,
+    /* other options */
+  });
 }
 var db = mongoose.connection;
 
