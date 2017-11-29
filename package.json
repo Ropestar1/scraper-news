@@ -16,7 +16,6 @@
   "bugs": {
     "url": "https://github.com/Ropestar1/scraper-news/issues"
   },
-  "homepage": "https://github.com/Ropestar1/scraper-news#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
     "cheerio": "^1.0.0-rc.2",
